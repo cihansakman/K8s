@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-end-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-end-deployment
+  template:
+    metadata:
+      labels:
+        app: back-end-deployment
+    spec:
+      containers:
+      - name: back-end-deployment
+        image: sakm/hello-world-back-end
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-server
+spec:
+  type: ClusterIP
+  selector:
+    app: back-end-deployment
+  ports:
+  - port: 5000
+    targetPort: 5000
+    
