@@ -1,0 +1,37 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-frontend-deployment
+  template:
+    metadata:
+      labels:
+        app: message-frontend-deployment
+    spec:
+      containers:
+      - name: message-frontend-deployment
+        image: sakm/message-demo-front-end
+        resources:
+        ports:
+        - containerPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: message-frontend-deployment
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+

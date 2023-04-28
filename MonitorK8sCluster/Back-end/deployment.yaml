@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-backend-deployment
+  template:
+    metadata:
+      labels:
+        app: message-backend-deployment
+    spec:
+      containers:
+      - name: message-backend-deployment
+        image: sakm/message-demo-back-end
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-backend
+spec:
+  selector:
+    app: message-backend-deployment
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: http
