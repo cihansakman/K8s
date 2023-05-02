@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-flask-app
+  template:
+    metadata:
+      labels:
+        app: my-flask-app
+    spec:
+      containers:
+      - name: my-flask-app
+        image: sakm/prometheus-example
+        ports:
+        - containerPort: 5000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-flask-app-service
+spec:
+  selector:
+    app: my-flask-app
+  ports:
+  - name: http
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer
