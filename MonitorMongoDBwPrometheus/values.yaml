@@ -1,0 +1,8 @@
+
+# our service name is mongodb-service
+mongodb:
+  uri: "mongodb://mongodb-service:27017"
+serviceMonitor:
+  additionalLabels:
+    release: prometheus
+
